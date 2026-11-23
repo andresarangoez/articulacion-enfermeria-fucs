@@ -211,6 +211,12 @@ tfoot td{background:var(--tinte);border-top:2px solid var(--azul-profundo)}
 .pie__fuentes{max-width:var(--ancho);margin:0 auto;padding:26px 20px 0}
 .btn-fuentes{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:1.5px solid var(--amarillo);color:var(--amarillo);font-weight:800;text-decoration:none}
 .btn-fuentes:hover{background:var(--amarillo);color:var(--azul-profundo)}
+.desp summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;min-height:44px}
+.desp summary::-webkit-details-marker{display:none}.desp summary h2{margin:0}
+.desp__btn{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;background:var(--azul-profundo);color:#fff;font-weight:800;font-size:.9rem;white-space:nowrap}
+.desp__btn::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.desp[open] .desp__btn::after{transform:rotate(-135deg) translate(-2px,-1px)}
+.desp[open] summary{margin-bottom:16px}
 </style>
 </head>
 <body>
@@ -273,8 +279,8 @@ tfoot td{background:var(--tinte);border-top:2px solid var(--azul-profundo)}
  <header class="banda"><h1>Cuadro comparativo de planes de estudio</h1>
  <p class="lead">Compara cómo reparte cada universidad su plan de estudios entre 19 ejes temáticos. Así se ve qué áreas pesan más o menos en FUCS que en cada plan europeo, y de ahí salen los porcentajes de similitud.</p></header>
  <p class="siglas"><span><b>ECTS</b>: European Credit Transfer and Accumulation System, el crédito europeo (1 ECTS = 25 a 30 horas de trabajo)</span><span><b>UCM</b>: Universidad Complutense de Madrid</span><span><b>UdL</b>: Universitat de Lleida</span><span><b>ULisboa</b>: Universidade de Lisboa</span></p>
- <div class="metodo">
-  <h2>Qué se hizo y por qué</h2>
+ <details class="metodo desp">
+  <summary><h2>Qué se hizo y por qué</h2><span class="desp__btn">Ver método</span></summary>
   <ol class="pasos">
    <li><div><b>Se reunieron los cuatro planes oficiales.</b> La malla FUCS (176 créditos), el plan de la UCM (240 ECTS), el de la UdL (240 ECTS) y el de la ULisboa (240 ECTS), con el nombre, los créditos y el semestre de cada asignatura.</div></li>
    <li><div><b>Cada asignatura se ubicó en uno de 19 ejes temáticos</b>, por ejemplo ciencias biomédicas básicas, cuidado del adulto, niño y adolescente o prácticas clínicas. Los ejes se definieron a partir de los módulos que exige la Orden CIN/2134/2008 en España y de los núcleos de formación de la malla FUCS, para que asignaturas con nombres distintos pero con el mismo contenido cayeran en el mismo eje.</div></li>
@@ -283,7 +289,7 @@ tfoot td{background:var(--tinte);border-top:2px solid var(--azul-profundo)}
    <li><div><b>Similitud de contenidos.</b> Cada una de las 50 asignaturas FUCS se buscó en el plan europeo: vale 1 si hay equivalente, 0,5 si el contenido está repartido o es parcial y 0 si no existe. El resultado se pondera por créditos (detalle en <a href="#asignaturas">Asignaturas</a>).</div></li>
    <li><div><b>Similitud global = promedio de las dos.</b> La estructural mide si el reparto del plan se parece; la de contenidos, si los temas existen. Se usan ambas porque dos planes pueden tener los mismos temas con pesos muy distintos.</div></li>
   </ol>
- </div>
+ </details>
  <h2>Cómo leer el cuadro</h2>
  <p style="text-align:justify">Elige una universidad. Cada eje muestra dos barras: la azul es FUCS y la amarilla, la universidad elegida, ambas como porcentaje de su propio plan. El semáforo indica cuánto se separan: hasta 1,5 puntos se considera similar, entre 1,5 y 4 una diferencia moderada y más de 4 una diferencia alta, que es donde un estudiante en intercambio notaría más horas o menos horas en esa área.</p>
  <div class="uni-tog" id="ejes-uni"></div>
@@ -414,6 +420,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('.rev button');if
 const FX='<div class="fx" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><defs><linearGradient id="ola-a" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity=".5"/><stop offset=".35" stop-color="#a78bfa" stop-opacity=".45"/><stop offset=".65" stop-color="#FBD785" stop-opacity=".4"/><stop offset="1" stop-color="#38bdf8" stop-opacity=".5"/></linearGradient><linearGradient id="ola-b" x1="1" x2="0"><stop offset="0" stop-color="#22d3ee" stop-opacity=".35"/><stop offset=".5" stop-color="#818cf8" stop-opacity=".35"/><stop offset="1" stop-color="#22d3ee" stop-opacity=".35"/></linearGradient></defs><g class="ola o1"><path fill="url(#ola-a)" d="M0 200C240 140 480 140 720 200S1200 260 1440 200V320H0Z"/><path fill="url(#ola-a)" transform="translate(1440 0)" d="M0 200C240 140 480 140 720 200S1200 260 1440 200V320H0Z"/></g><g class="ola o2"><path fill="url(#ola-b)" d="M0 240C240 200 480 280 720 240S1200 200 1440 240V320H0Z"/><path fill="url(#ola-b)" transform="translate(1440 0)" d="M0 240C240 200 480 280 720 240S1200 200 1440 240V320H0Z"/></g></svg></div>';
 $$('.banda,.heroe').forEach((b,n)=>b.insertAdjacentHTML('afterbegin',FX.replace(/ola-a/g,'ola-a'+n).replace(/ola-b/g,'ola-b'+n)));
 
+$$('details.desp').forEach(d=>d.addEventListener('toggle',()=>{d.querySelector('.desp__btn').textContent=d.open?'Ocultar método':'Ver método'}));
 /* ---------- RESUMEN ---------- */
 const I=D.indices;
 $('#medidor').innerHTML=['UCM','UdL','ULisboa'].map(k=>`<div class="med"><div class="med__top"><span style="display:flex;gap:10px;align-items:center">${sello(k)}<span><span class="med__u">${U[k].n.split(' · ')[0]}</span><br><small>${U[k].c}</small></span></span><span class="med__n">${fmt(I[k].global)} %</span></div><div class="barra-p"><i style="width:${I[k].global}%"></i></div><small>Estructura ${fmt(I[k].estructural)} % · Contenidos ${fmt(I[k].cob_cred)} %</small></div>`).join('');
